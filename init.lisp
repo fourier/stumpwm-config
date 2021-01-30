@@ -12,7 +12,13 @@
 (set-prefix-key (kbd "s-t"))
 
 ;; Set the modeline and its format
-(setf *screen-mode-line-format* "^BBat %B^b ^B%d^b [^B%n^b] %W ")
+
+(setf *screen-mode-line-format* "^BBat %B^b | ^B%d^b | ^B%n^b : %W ")
+;; default: (setf *time-modeline-string* "%a %b %e %k:%M:%S")
+(setf *time-modeline-string* "%b %e %k:%M")
+;; default: (setf *window-format* "%m%n%s%50t")
+(setf *window-format* "%m%n%s%50t")
+;; turn on modeline
 (toggle-mode-line (current-screen) (current-head))
 
 ;; Set "focus follow mouse" focus policy
@@ -84,14 +90,6 @@
 ;; Configuration
 (define-key *top-map* (stumpwm:kbd "s-F1") "single-screen")
 (define-key *top-map* (stumpwm:kbd "s-F2") "dual-screen")
-;; (define-key *top-map* (stumpwm:kbd "s-F3") "gselect 3")
-;; (define-key *top-map* (stumpwm:kbd "s-F4") "gselect 4")
-;; (define-key *top-map* (stumpwm:kbd "s-F5") "gselect 5")
-;; (define-key *top-map* (stumpwm:kbd "s-F6") "gselect 6")
-;; (define-key *top-map* (stumpwm:kbd "s-F7") "gselect 7")
-;; (define-key *top-map* (stumpwm:kbd "s-F8") "gselect 8")
-;; (define-key *top-map* (stumpwm:kbd "s-F9") "gselect 9")
-;; (define-key *top-map* (stumpwm:kbd "s-F10") "gselect 10")
 
 ;; window management
 (define-key *top-map* (stumpwm:kbd "s-b") "pull-from-windowlist")
@@ -154,7 +152,8 @@
 ;;(define-key *root-map* (kbd "i") "imdb")
 
 ;; Message window font
-(set-font "-*-clean-*-*-*-*-16-*-*-*-*-*-*-*")
+;;(set-font "-*-clean-*-*-*-*-16-*-*-*-*-*-*-*")
+(set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-microsoft-cp1251")
 ;; (set-font "xft:Monospace:medium:size=14")
 ;; Position output and input in the center of the screen
 (setf *message-window-gravity* :center)
