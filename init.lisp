@@ -13,11 +13,13 @@
 
 ;; Set the modeline and its format
 
-(setf *screen-mode-line-format* "^BBat %B^b | ^B%d^b | ^B%n^b : %W ")
+(setf *screen-mode-line-format* "^BBat %B^b | ^B%d^b | ^B%n^b : %w ")
 ;; default: (setf *time-modeline-string* "%a %b %e %k:%M:%S")
 (setf *time-modeline-string* "%b %e %k:%M")
 ;; default: (setf *window-format* "%m%n%s%50t")
 (setf *window-format* "%m%n%s%50t")
+;; update modeline every 2 seconds
+(setf *mode-line-timeout* 2)
 ;; turn on modeline
 (toggle-mode-line (current-screen) (current-head))
 
@@ -26,6 +28,15 @@
 
 ;; Suppress frame indicator
 (setf *suppress-frame-indicator* t)
+
+;; hack to enable scroll in some programs
+(setf (getenv "GDK_CORE_DEVICE_EVENTS") "1")
+
+
+;; set keyboard layout
+(defun set-xkb () 
+  ;; Run this command to restore capslock: (run-shell-command "setxkbmap -option")
+  (run-shell-command "setxkbmap -layout dvorak,ru -option \"grp:alt_shift_toggle,caps:ctrl_modifier\""))
 
 
 ;; prompt the user for an interactive command. The first arg is an
@@ -39,11 +50,13 @@
 (defcommand single-screen () (:rest)
   "Switch to single display setup"
   (run-shell-command "xrandr --output DP-0 --off")
+  (set-xkb)
   (message "Single screen"))
 
 (defcommand dual-screen () (:rest)
   "Switch to dual display setup"
   (run-shell-command "xrandr --output LVDS-0 --left-of DP-0 --output DP-0 --auto")
+  (set-xkb)
   (message "Dual screen"))
 
 (defcommand urxvt () (:rest)
@@ -218,5 +231,4 @@
 
 
 ;; set keyboard layout
-(run-shell-command "setxkbmap -layout dvorak,ru -option \"grp:alt_shift_toggle,caps:ctrl_modifier\"")
-;; Run this command to restore capslock: (run-shell-command "setxkbmap -option")
+(set-xkb)
