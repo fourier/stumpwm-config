@@ -17,7 +17,7 @@
 
 (defun get-window-formatted-name ()
   (let ((w (current-window)))
-    (if w (format nil "~d/~d ~a"
+    (if w (format nil "[~d/~d] ~a"
                   (1+ (window-number w))
                   (length (group-windows (current-group)))
                   (window-title w))
