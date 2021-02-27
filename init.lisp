@@ -17,10 +17,12 @@
 
 (defun get-window-formatted-name ()
   (let ((w (current-window)))
-    (if w (format nil "~d ~s"
-                  (window-number w)
+    (if w (format nil "~d/~d ~a"
+                  (1+ (window-number w))
+                  (length (group-windows (current-group)))
                   (window-title w))
         "(none)")))
+
 ;; CPU format
 (setf cpu::*cpu-modeline-fmt* "%c")
 ;;(setf *screen-mode-line-format* "%g | : ^[^2^B%w^b^] ^> | %d | ^BBat %B^b")
