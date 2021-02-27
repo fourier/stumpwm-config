@@ -7,6 +7,8 @@
 ;; load modules
 (load-module "battery-portable")
 (load-module "amixer")
+(load-module "wifi")
+(load-module "cpu")
 
 ;; change the prefix key to something else
 (set-prefix-key (kbd "s-t"))
@@ -19,12 +21,13 @@
                   (window-number w)
                   (window-title w))
         "(none)")))
-  
+;; CPU format
+(setf cpu::*cpu-modeline-fmt* "%c")
 ;;(setf *screen-mode-line-format* "%g | : ^[^2^B%w^b^] ^> | %d | ^BBat %B^b")
-(setf *screen-mode-line-format* (list "%g | : ^[^2^B"
+(setf *screen-mode-line-format* (list "%g | %C | : ^[^2^B"
                                       '(:eval
                                         (get-window-formatted-name))
-                                      "^b^] ^> | %d | ^BBat %B^b"))
+                                      "^b^] ^> | %d | %I | ^BBat %B^b"))
 
 ;; default: (setf *time-modeline-string* "%a %b %e %k:%M:%S")
 (setf *time-modeline-string* "%b %e %k:%M")
@@ -228,7 +231,7 @@
   (0 t t :class "client.exe"))
 
 ;; rename default group
-(grename "xterm")
+(grename "term")
 
 ;; Create groups
 (add-group (current-screen) "emacs")
