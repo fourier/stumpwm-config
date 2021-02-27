@@ -33,6 +33,9 @@
 (setf *time-modeline-string* "%b %e %k:%M")
 ;; default: (setf *window-format* "%m%n%s%50t")
 (setf *window-format* "%m%n%s%50t")
+;; default: (setf *mode-line-highlight-template* "^R~A^r")
+(setf *mode-line-highlight-template* "^[^2<~A>^]")
+
 ;; update modeline every 2 seconds
 (setf *mode-line-timeout* 2)
 ;; turn on modeline
