@@ -13,7 +13,19 @@
 
 ;; Set the modeline and its format
 
-(setf *screen-mode-line-format* "^BBat %B^b | ^B%d^b | ^B%n^b : %w ")
+(defun get-window-formatted-name ()
+  (let ((w (current-window)))
+    (if w (format nil "~d ~s"
+                  (window-number w)
+                  (window-title w))
+        "(none)")))
+  
+;;(setf *screen-mode-line-format* "%g | : ^[^2^B%w^b^] ^> | %d | ^BBat %B^b")
+(setf *screen-mode-line-format* (list "%g | : ^[^2^B"
+                                      '(:eval
+                                        (get-window-formatted-name))
+                                      "^b^] ^> | %d | ^BBat %B^b"))
+
 ;; default: (setf *time-modeline-string* "%a %b %e %k:%M:%S")
 (setf *time-modeline-string* "%b %e %k:%M")
 ;; default: (setf *window-format* "%m%n%s%50t")
@@ -183,6 +195,8 @@
 ;; Clear rules
 (clear-window-placement-rules)
 
+
+
 ;; Last rule to match takes precedence!
 ;; TIP: if the argument to :title or :role begins with an ellipsis, a substring
 ;; match is performed.
@@ -190,40 +204,42 @@
 ;; restored from *data-dir*/create file.
 ;; TIP: if the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
-(define-frame-preference "Default"
+(define-frame-preference "term"
   ;; frame raise lock (lock AND raise == jumpto)
   ;;(0 t nil :class "Konqueror" :role "...konqueror-mainwindow")
 ;;  (1 t nil :class "XTerm")
   (0 t t :class "URxvt")
   (0 t t :class "Far2l"))
 
-(define-frame-preference "Emacs"
+(define-frame-preference "emacs"
   (0 t t :class "Emacs"))
 
-(define-frame-preference "Browser"
+(define-frame-preference "web"
   (0 t t :role "browser"))
 
-(define-frame-preference "Chat"
+(define-frame-preference "chat"
   (0 t t :class "discord"))
 
-(define-frame-preference "Lisp"
+(define-frame-preference "lisp"
   (0 t t :class "Lispworks"))
 
-(define-frame-preference "Games"
+(define-frame-preference "games"
   (0 t t :class "uo.bin")
   (0 t t :class "client.exe"))
 
+;; rename default group
+(grename "xterm")
 
 ;; Create groups
-(add-group (current-screen) "Emacs")
-(add-group (current-screen) "Browser")
-(add-group (current-screen) "Chat")
-(add-group (current-screen) "Lisp")
-(add-group (current-screen) "Games")
-(add-group (current-screen) "Misc 1")
-(add-group (current-screen) "Misc 2")
-(add-group (current-screen) "Misc 3")
-(add-group (current-screen) "Misc 4")
+(add-group (current-screen) "emacs")
+(add-group (current-screen) "web")
+(add-group (current-screen) "chat")
+(add-group (current-screen) "lisp")
+(add-group (current-screen) "games")
+(add-group (current-screen) "misc1")
+(add-group (current-screen) "misc2")
+(add-group (current-screen) "misc3")
+(add-group (current-screen) "misc4")
 
 ;; create Slynk server
 (ql:quickload "slynk")
